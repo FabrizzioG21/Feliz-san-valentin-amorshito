@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:black;
+overflow:hidden;
+}
+
+/* VIDEO FONDO */
+#bgVideo{
+position:fixed;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
+filter:brightness(0.5);
+}
+
+/* ESCENA 3D */
+.scene{
+perspective:1500px;
+}
+
+/* SOBRE */
+.envelope{
+position:relative;
+width:340px;
+height:220px;
+background:#f8d7da;
+border-radius:6px;
+cursor:pointer;
+transform-style:preserve-3d;
+transition:1.2s cubic-bezier(.65,-0.4,.2,1.5);
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* TAPA */
+.flap{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#ff4d6d;
+clip-path:polygon(0 0, 50% 60%, 100% 0);
+transform-origin:top;
+transition:1.2s cubic-bezier(.65,-0.4,.2,1.5);
+}
+
+/* SELLO CORAZÓN */
+.seal{
+position:absolute;
+top:85px;
+left:50%;
+transform:translateX(-50%);
+font-size:40px;
+animation:beat 1s infinite;
+}
+
+@keyframes beat{
+0%{transform:translateX(-50%) scale(1);}
+50%{transform:translateX(-50%) scale(1.15);}
+100%{transform:translateX(-50%) scale(1);}
+}
+
+/* HOJA */
+.letter{
+position:absolute;
+width:320px;
+background:white;
+padding:25px;
+border-radius:15px;
+top:20px;
+left:10px;
+transform:translateY(100%);
+transition:1.4s ease;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
+opacity:0;
+}
+
+.letter img{
+width:180px;
+border-radius:12px;
+margin-bottom:15px;
+}
+
+/* ANIMACIONES AL ABRIR */
+.open .flap{
+transform:rotateX(-180deg);
+}
+
+.open .letter{
+transform:translateY(-120px);
+opacity:1;
+}
+
+/* BOTONES */
+button{
+padding:10px 20px;
+border:none;
+border-radius:25px;
+font-size:16px;
+margin:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.si{
+background:#ff4d6d;
+color:white;
+box-shadow:0 0 15px rgba(255,77,109,0.6);
+}
+
+.si:hover{
+transform:scale(1.1);
+}
+
+.no{
+background:#ccc;
+position:absolute;
+}
+</style>
+</head>
+<body>
+
+<video id="bgVideo" loop>
+<source src="fondo.mp4" type="video/mp4">
+</video>
+
+<div class="scene">
+<div class="envelope" id="carta">
+<div class="flap"></div>
+<div class="seal">❤️</div>
+
+<div class="letter" id="mensaje">
+<center>
+<img src="imagen.jpg">
+<h2>¿Quieres ser mi San Valentín? 💞👉👈</h2>
+<p>Prometo hacerte muy feliz 💕</p>
+
+<button class="si" onclick="irLink()">Sí 💞</button>
+<button class="no" id="noBtn">No 😢</button>
+</center>
+</div>
+
+</div>
+</div>
+
+<audio id="musica" src="musica.mp3"></audio>
+
+<script>
+const carta = document.getElementById("carta");
+const video = document.getElementById("bgVideo");
+const musica = document.getElementById("musica");
+
+carta.addEventListener("click", function(){
+
+carta.classList.add("open");
+
+/* ACTIVAR SONIDO DEL VIDEO */
+video.muted = false;
+video.play();
+
+/* ACTIVAR MÚSICA */
+musica.play();
+
+});
+
+/* BOTÓN NO IMPOSIBLE PERO DENTRO DE LA CARTA */
+const noBtn = document.getElementById("noBtn");
+const cartaContainer = document.getElementById("mensaje");
+
+noBtn.addEventListener("click", function(e){
+    e.preventDefault();
+
+    const cartaRect = cartaContainer.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const maxX = cartaRect.width - btnRect.width - 20;
+    const maxY = cartaRect.height - btnRect.height - 20;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+});
+
+function irLink(){
+window.location.href="https://fabrizziog21.github.io/Feliz-san-valentin-amorshito-2/";
+}
+</script>
+
+</body>
+</html>
